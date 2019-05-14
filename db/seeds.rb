@@ -5,3 +5,28 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+
+# require 'faker'
+
+# 5.times do
+#   cocktail = Cocktail.new(
+#     name:    Faker::Company.name,
+#     ingredient: "#{Faker::Address.street_address}, #{Faker::Address.city}",
+#     dose:  rand(1..3)
+#   )
+#   restaurant.save!
+# end
+
+require 'json'
+require 'open-uri'
+
+Ingredient.destroy_all
+
+url = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list'
+user_serialized = open(url).read
+cocktails = JSON.parse(user_serialized)
+
+cocktails['drinks'].each do |ingredient|
+  Ingredient.create!(name: ingredient['strIngredient1'])
+end
