@@ -5,7 +5,7 @@ class CocktailsController < ApplicationController
   end
 
   def show
-    # @cocktail = Cocktail(params([:id]))
+    @cocktail = Cocktail(params([:id]))
   end
 
   def new
@@ -17,5 +17,12 @@ class CocktailsController < ApplicationController
     @cocktail = Cocktail.create
     @cocktail.save
   end
+
+  private
+
+  def cocktail_params
+    params.require(:review).permit(:id)
+  end
+
 
 end
